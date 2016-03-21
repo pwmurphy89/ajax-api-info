@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>yAHOO finance ticker - API -AJAX - INTRO</title>
+
+	<style type="text/css" media="screen">
+		#header {
+			font-size: 20px;
+			width: 100%;
+			text-align: center;
+
+		}
+		#stock-details {
+			width: 80%;
+			margin: auto;
+			padding: 15px;
+		}
+		table {
+			width: 100%;
+		}
+		td, th{
+			text-transform: uppercase;
+			text-align: center;
+			padding: 10px;
+		}
+	</style>
+
+
+
+</head>
+<body>
+	<div id="header">
+		<div id="what-ticker">
+			What ticker do you want to search for?
+		</div>
+	
+
+		<form id="ticker-search">
+			<input type="text" id="symbol" placeholder="e.g. GOOG">
+			<input type="submit" value="Get me the quote!">
+
+		</form>
+	</div>
+
+	<div id="stock-detials">
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Stock Symbol</th>
+					<th>Company Name</th>
+					<th>Ask Price</th>
+					<th>Daily Chance</th>
+					<th>Day High</th>
+				</tr>
+			</thead>
+
+			<tbody id="ticker-body">
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+	<script type ="text/javascript">
+
+		$(document).ready(function() {
+			$("#ticker-search").submit(function() {
+				var ticker=$("#symbol").val();
+
+				var url = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20("' + ticker + '")%0A%09%09&env=http%3A%2F%2Fdatatables.org%2Falltables.env&format=json';
+
+				$.getJSON(url,function(yahooResult){
+					var stockInfo = yahooResult.query.results.quote;
+					var symbol = stockInfo.Symbol;
+					var companyName = stockInfo.Name;
+					var askPrice = stockInfo.Ask;
+					var dailyChange = stockInfo.Change;
+					var dayHigh = stockInfo.DaysHigh;
+
+					var newHTML = "<tr><td>" + symbol + "</td>";
+					newHTML += "<td>" + companyName + "</td>";
+					newHTML += "<td>" + askPrice + "</td>";
+					newHTML += "<td>" + dailyChange + "</td>";
+					newHTML += "<td>" + dayHigh + "</td></tr>";
+
+					 $("#ticker-body").html(newHTML);
+				});
+				event.preventDefault();
+			});
+
+
+		});
+	</script>
+</body>
+</html>

@@ -3,31 +3,9 @@
 <head>
 
 	<title>yAHOO finance ticker - API -AJAX - INTRO</title>
-
-	<style type="text/css" media="screen">
-		#header {
-			font-size: 20px;
-			width: 100%;
-			text-align: center;
-
-		}
-		#stock-details {
-			width: 80%;
-			margin: auto;
-			padding: 15px;
-		}
-		table {
-			width: 100%;
-		}
-		td, th{
-			text-transform: uppercase;
-			text-align: center;
-			padding: 10px;
-		}
-	</style>
-
-
-
+	<link rel="stylesheet" type="text/css" href="footables/css/footable.core.css">
+	<link rel="stylesheet" type="text/css" href="footables/css/footable.standalone.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
 	<div id="header">
@@ -43,8 +21,11 @@
 		</form>
 	</div>
 
-	<div id="stock-detials">
-		<table border="1">
+	<div id="stock-details">
+
+	<input type="text" id="filter">
+
+		<table border="1" class="footable table" data-filter="#filter" data-page-navigation="pagination">
 			<thead>
 				<tr>
 					<th>Stock Symbol</th>
@@ -56,48 +37,35 @@
 			</thead>
 
 			<tbody id="ticker-body">
-				<tr>
+<!-- 				<tr>
 					<td></td>
 					<td></td>
 					<td></td>
 					<td></td>
 					<td></td>
-				</tr>
+				</tr> -->
 			</tbody>
+
+				<tfoot>
+					<tr>
+						<td colspan="5">
+							<div class="pagination pagination-centered"></div>
+						</td>
+					</tr>
+				</tfoot>
+			
 		</table>
 	</div>
 
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-	<script type ="text/javascript">
-
-		$(document).ready(function() {
-			$("#ticker-search").submit(function() {
-				var ticker=$("#symbol").val();
-
-				var url = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20("' + ticker + '")%0A%09%09&env=http%3A%2F%2Fdatatables.org%2Falltables.env&format=json';
-
-				$.getJSON(url,function(yahooResult){
-					var stockInfo = yahooResult.query.results.quote;
-					var symbol = stockInfo.Symbol;
-					var companyName = stockInfo.Name;
-					var askPrice = stockInfo.Ask;
-					var dailyChange = stockInfo.Change;
-					var dayHigh = stockInfo.DaysHigh;
-
-					var newHTML = "<tr><td>" + symbol + "</td>";
-					newHTML += "<td>" + companyName + "</td>";
-					newHTML += "<td>" + askPrice + "</td>";
-					newHTML += "<td>" + dailyChange + "</td>";
-					newHTML += "<td>" + dayHigh + "</td></tr>";
-
-					 $("#ticker-body").html(newHTML);
-				});
-				event.preventDefault();
-			});
+	<script type="text/javascript" src="footables/js/footable.js"</script>
+	<script type="text/javascript" src="footables/js/footable.sort.js"</script>
+	<script type="text/javascript" src="footables/js/footable.filter.js"</script>
+	<script type="text/javascript" src="footables/js/footable.paginate.js"</script>
 
 
-		});
-	</script>
+	 <script type="text/javascript" src="scripts.js"></script>
+	
 </body>
 </html>

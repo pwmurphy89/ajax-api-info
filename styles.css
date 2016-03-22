@@ -1,0 +1,27 @@
+
+		#header {
+			font-size: 20px;
+			width: 100%;
+			text-align: center;
+
+		}
+		#stock-details {
+			width: 80%;
+			margin: auto;
+			padding: 15px;
+		}
+		table {
+			width: 100%;
+		}
+		td, th{
+			text-transform: uppercase;
+			text-align: center;
+			padding: 10px;
+		}
+.green {
+	color: green;
+}
+
+.red {
+	color: red;
+}
